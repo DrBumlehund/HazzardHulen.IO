@@ -18,10 +18,12 @@ app.controller('clientNGJSCtrl', function($scope) {
     console.log("Updating Board State: " + JSON.stringify(table));
     $scope.table = JSON.parse(table);
     console.log($scope.table);
+    console.log($scope.table.deck.length);
+    
     updatePlayers($scope.table);
     if ($scope.table.state == "postGame") {
         console.log("postGame");
-        startTimer(15000);
+        startTimer(2000);
     }
     $scope.$apply();
     });

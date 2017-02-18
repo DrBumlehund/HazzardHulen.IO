@@ -34,6 +34,7 @@ function resetTable(){
     log.notice("Resetting Table...");
     table.dealerHand = [];
     table.dealerScore = 0;
+    table.deck = _.shuffle(_.range(1, 53))
     for (var ply in table.activePlayers) {
         ply = table.activePlayers[ply];
         ply.hand = [];
@@ -99,17 +100,22 @@ function dealerTurn() {
 
     //Calculate Winners & Payout
     for (var ply in table.activePlayers) {
+        console.log(table.activePlayers.length);
         var player = table.activePlayers[ply];
+        console.log("Player Bet: " + player.bet);
+        console.log("Player balance: " + player.balance);
+        console.log("Player score: " + player.score);
+        console.log("Dealer score: " + dealerScore);
+
         if ((player.score >= dealerScore && player.score <= 21) || dealerScore > 21) {
             if(player.score == dealerScore){
                 // push
                 console.log("Player Bet" + player.bet);
-                Number(player.balance += player.bet)
-                break;
+                player.balance += parseInt(player.bet);
+                console.log("Player new balance: " + player.balance);
             } else if (player.score == 21) {
                 // Blackjack
                 Number(player.balance += player.bet * 2.5)
-                break;
             } else {
                 // Win
                Number(player.balance += player.bet * 2)
@@ -161,7 +167,7 @@ function findPlayer(id) {
 
 app.use(express.static(__dirname + '/bower_components'));
 app.get('/', function (req, res, next) {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/client.html');
 });
 
 io.on('connection', function (client) {
