@@ -161,7 +161,7 @@ function findPlayer(id) {
 
 app.use(express.static(__dirname + '/bower_components'));
 app.get('/', function (req, res, next) {
-    res.sendFile(__dirname + '/client.html');
+    res.sendFile(__dirname + '/index.html');
 });
 
 io.on('connection', function (client) {
