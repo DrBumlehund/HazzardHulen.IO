@@ -1,7 +1,16 @@
 
+let fs = require('fs');
+let https = require('https');
+
 let express = require('express');
 let app = express();
-let server = require('http').createServer(app);
+let options = {
+  key: fs.readFileSync('./server.key'),
+  cert: fs.readFileSync('./server.crt')
+};
+
+let server = https.createServer(options, app);
+
 let io = require('socket.io')(server);
 let monolog = require('monolog');
 let Logger = monolog.Logger;
